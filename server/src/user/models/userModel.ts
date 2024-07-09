@@ -1,10 +1,13 @@
 import { Document, model, Schema } from "mongoose";
 
-interface IUser extends Document {
+export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
   phone: string;
+  address: string;
+  date_joined: Date;
+  profile_picture: string;
 }
 
 const userSchema = new Schema<IUser>({
@@ -22,6 +25,18 @@ const userSchema = new Schema<IUser>({
     required: true,
   },
   phone: {
+    type: String,
+    required: false,
+  },
+  address: {
+    type: String,
+    required: false,
+  },
+  date_joined: {
+    type: Date,
+    default: Date.now,
+  },
+  profile_picture: {
     type: String,
     required: false,
   },
