@@ -9,7 +9,7 @@ export interface ICar extends Document {
   color: string;
   vin: string;
   mileage: number;
-  transmission: string; // corrected the typo here
+  transmission: string;
   fuel_type: string;
   description: string;
   date_listed: Date;
@@ -49,7 +49,6 @@ const carSchema = new Schema<ICar>({
     required: true,
   },
   transmission: {
-    // corrected the typo here
     type: String,
     required: true,
   },
@@ -72,7 +71,7 @@ const carSchema = new Schema<ICar>({
   sellerId: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true, // added required validation
+    required: true,
   },
   meters: {
     type: Number,

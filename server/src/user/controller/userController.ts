@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
+import bcrypt from "bcryptjs";
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { name, email, password } = req.body;
-    if ([name, email, password].some((field) => field.trim() === "")) {
+    const { name, email, password, phone, address, profile_picture } = req.body;
+    if (
+      [name, email, password, phone, address, profile_picture].some(
+        (field) => field.trim() === ""
+      )
+    ) {
       return res
         .status(400)
         .json({ success: false, message: "Please fill all fields" });
@@ -15,7 +20,16 @@ export const register = async (req: Request, res: Response) => {
         .status(400)
         .json({ success: true, message: "User already exists" });
     }
-    const user = await User.create({ name, email, password });
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      phone,
+      address,
+      profile_picture,
+    });
     return res.status(201).json({ success: true, user });
   } catch (error) {
     console.log("Error in register: ", error);
@@ -37,7 +51,8 @@ export const login = async (req: Request, res: Response) => {
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
     }
-    if (password !== user.password) {
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
