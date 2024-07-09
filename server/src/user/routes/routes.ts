@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { register } from "ts-node";
-import { login } from "../controller/userController";
+import { login, register } from "../controller/userController";
 
 const userRoutes = Router();
 
