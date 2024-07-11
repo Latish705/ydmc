@@ -51,13 +51,22 @@ export const login = async (req: Request, res: Response) => {
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
     }
-    return res.status(200).json({ success: true, user });
+    const token = user.generateToken();
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    return res
+      .status(200)
+      .cookie("token", token, options)
+      .json({ success: true, user });
   } catch (error) {
     console.log("Error in login: ", error);
     return res.status(500).json({ success: false, message: "Server Error" });
