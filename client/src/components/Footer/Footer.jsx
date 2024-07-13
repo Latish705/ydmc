@@ -4,6 +4,7 @@ import { FaFacebookF,FaLinkedinIn, FaPhone  } from "react-icons/fa6";
 import Logo from "../../assets/HeaderLogo.png"
 import { GrMail, GrMapLocation } from "react-icons/gr";
 import { NavLink } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function Footer() {
   return (
@@ -18,7 +19,7 @@ function Footer() {
         </div>
         <div className="MainFooterDiv">
             <div className="Logo_container">
-                <img src={Logo} alt="Logo.png"  />
+                <LazyLoadImage src={Logo} alt="Logo.png"  />
                 <p className="Logodetails">Your trusted partner for buying and selling quality cars. Visit us to drive away in your dream vehicle today</p>
                 <div className="contactDetails">
                     <GrMapLocation width={"1.25rem"}/>
