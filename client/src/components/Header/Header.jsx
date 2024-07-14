@@ -5,6 +5,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 function Header() {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -38,7 +39,7 @@ function Header() {
                 </div>
                 {/* ComputerDisplay */}
                 <div className='LogoContainer'>
-                    <img src={Logo} alt='Logo.png' className='HeaderLogo' />
+                    <LazyLoadImage src={Logo} alt='Logo.png' className='HeaderLogo' effect="blur"/>
                 </div>
                 <div className='PagesContainer DesktopMenu'>
                     <NavLink to='/' className='NavigationLink rightBorder' activeClassName='active'> Home </NavLink>
